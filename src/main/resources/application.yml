@@ -1,0 +1,91 @@
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: ${kafka.bootstrap.server.url}
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      security:
+        protocol: SSL
+      ssl:
+        endpoint:
+          identification:
+            algorithm:
+        trust-store-location: file://${kafka.truststore.location}
+        trust-store-password: ${kafka.truststore.password}
+  jmx:
+    enabled: true
+  application:
+    name: createorder
+
+  zipkin:
+    base-url: ${JAEGER_COLLECTOR_URL}
+    service:
+      name: createorder
+    enabled: true
+  sleuth:
+    opentracing:
+      enabled: true
+    trace-id128: true
+    sampler:
+      probability: 1.0
+    reactor:
+      enabled: true
+  jackson:
+    default-property-inclusion: NON_NULL
+
+server:
+  port: 9303
+  compression:
+    enabled: true
+  netty:
+    log-level: TRACE
+management:
+  security:
+    enabled: false  #disable the spring security on the management endpoints like /env, /refresh etc.
+  endpoints:
+    web:
+      exposure:
+        include: info,health,prometheus,env,httptrace,loggers,endpoints
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  level:
+    ROOT: INFO
+    reactor:
+      netty: INFO
+    com:
+      atd:
+          microservices:
+            core:
+              createorder: DEBUG
+    org:
+      springframework:
+        web:
+          reactive:
+            function:
+              client:
+                ExchangeFunctions: TRACE
+springdoc:
+  swagger-ui:
+    enabled: false
+  version: '@springdoc.version@'
+app:
+  kafka-order-ack-topic: ${order.ack.topic}
+  webclient:
+    apigateway-url: ${apigateway.url}
+    msa-base-path: ${msa.cluster.base.url}
+    customerlocation-storenumber-url: customerlocation/location/siteuse/%1$s/%2$s
+    customerlocation-attribute4-url: customerlocation/location/siteuse/%1$s/attribute4/%2$s
+    customerlocation-locationnumber-url: customerlocation/location/get/%1$s/siteUse
+    orderenrichment-url: orderenrichment/
+    product-xref-url: product/xref?customerIDKey=%1$s&customerPrdKey=%2$s
+    ediconfig-url: ediconfig/customer/%1$s/%2$s
+    edi-cross-ref-url: ediproductcrossrefs/partnerid/%1$s/product/%2$s/brand/%3$s
+    processorder-process-url: processorderv2/process/%1$s/%2$s
+    catalog-orgid-url: product/catalogs/orgId/%1$s
+    product-invid-orgid-url: product/findByInventoryItemIDAndOrgID/%1$s/%2$s
+    product-invid-orgid-attr-url: product/findByInventoryItemIDAndOrgIDAndAttrName/%1$s/%2$s/catalog?attributeName=%3$s
+    product-findbyproductnumber-url: product/findByProductNumberAndOrgID/%1$s/%2$s
+    fndconfig-url: fndconfig/flexvalues?valuesetname=%1$s
+

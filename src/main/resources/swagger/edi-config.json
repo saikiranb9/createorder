@@ -1,0 +1,98 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "",
+    "description": " API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "",
+  "basePath": "/ediconfig",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/customer/{sendercode}/{receivercode}": {
+      "get": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Gets config based on sendercode",
+        "description": "Returns config based on sendercode",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sendercode",
+            "in": "path",
+            "description": "sendercode",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A department",
+            "schema": {
+              "$ref": "#/definitions/EdiConfig"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "type": "object",
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "type": "object",
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "EdiConfig" : {
+      "type": "object",
+      "properties": {
+        "fillOrKill": {
+          "type": "string"
+        },
+        "customerID": {
+          "type": "string"
+        },
+        "fulfillmentType": {
+          "type": "string"
+        },
+        "storeLookUp": {
+          "type": "string"
+        },
+        "isProductCrossReferenceEnabled" : {
+		 "type" : "string"
+		}
+      }
+    }
+  }
+}

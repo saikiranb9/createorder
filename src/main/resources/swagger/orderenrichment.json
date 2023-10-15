@@ -1,0 +1,1468 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Order Enrichment",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://springdoc.org"
+    },
+    "version": "1.6.9"
+  },
+  "servers": [
+    {
+      "url": "/orderenrichment",
+      "description": "Order Enrichment Server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "post": {
+        "tags": [
+          "Order Enrichment"
+        ],
+        "description": "Order Enrichment for the products included in the order.",
+        "operationId": "orderenrichment",
+        "requestBody": {
+          "description": "Order Enrichment Request",
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderEnrichment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderEnrichmentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fields are with validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed - incorrect username and/or password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Data not found with provided ProductReq Group Id for Order Enrichment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Request not acceptable for Order Enrichment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "Request not processed due to failed dependecy Order Enrichment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OrderEnrichment": {
+        "type": "object",
+        "properties": {
+          "customerPONumber": {
+            "type": "string"
+          },
+          "locationNumber": {
+            "type": "string"
+          },
+          "fillOrKill": {
+            "type": "string"
+          },
+          "fulfilmentType": {
+            "type": "string"
+          },
+          "prxCheckEnabled": {
+            "type": "boolean"
+          },
+          "disableViv": {
+            "type": "boolean"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductLine"
+            }
+          }
+        }
+      },
+      "ProductLine": {
+        "type": "object",
+        "properties": {
+          "lineId": {
+            "type": "string"
+          },
+          "productNumber": {
+            "type": "string"
+          },
+          "customerPOLineId": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "Attribute": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "CustomerShipTo": {
+        "type": "object",
+        "properties": {
+          "address1": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "address3": {
+            "type": "string"
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attribute"
+            }
+          },
+          "billtoaddress1": {
+            "type": "string"
+          },
+          "billtoaddress2": {
+            "type": "string"
+          },
+          "billtoaddress3": {
+            "type": "string"
+          },
+          "billtocity": {
+            "type": "string"
+          },
+          "billtocountry": {
+            "type": "string"
+          },
+          "billtocounty": {
+            "type": "string"
+          },
+          "billtofirstname": {
+            "type": "string"
+          },
+          "billtolastname": {
+            "type": "string"
+          },
+          "billtostate": {
+            "type": "string"
+          },
+          "billtozip": {
+            "type": "string"
+          },
+          "billtozipplus4": {
+            "type": "string"
+          },
+          "buyerlocationId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "county": {
+            "type": "string"
+          },
+          "createdby": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "creationdate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "email": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "languagecode": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "lastupdatedate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastupdatedby": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "orgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "origsysdocumentref": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "residential": {
+            "type": "string"
+          },
+          "shiptoattention": {
+            "type": "string"
+          },
+          "siteuseid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          },
+          "zipplus4": {
+            "type": "string"
+          }
+        }
+      },
+      "Header": {
+        "type": "object",
+        "properties": {
+          "actioncode": {
+            "type": "string",
+            "enum": [
+              "BOOKED",
+              "ENTERED",
+              "UPDATE",
+              "CANCEL"
+            ]
+          },
+          "affiliateid": {
+            "type": "string"
+          },
+          "attribute": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attribute"
+            }
+          },
+          "bookedflag": {
+            "type": "string"
+          },
+          "cancelledflag": {
+            "type": "string"
+          },
+          "changereason": {
+            "type": "string"
+          },
+          "consumeraddress1": {
+            "type": "string"
+          },
+          "consumeraddress2": {
+            "type": "string"
+          },
+          "consumerbtaddress1": {
+            "type": "string"
+          },
+          "consumerbtaddress2": {
+            "type": "string"
+          },
+          "consumerbtcity": {
+            "type": "string"
+          },
+          "consumerbtcontactname": {
+            "type": "string"
+          },
+          "consumerbtcontactnumber": {
+            "type": "string"
+          },
+          "consumerbtcountry": {
+            "type": "string"
+          },
+          "consumerbtemail": {
+            "type": "string"
+          },
+          "consumerbtname": {
+            "type": "string"
+          },
+          "consumerbtstate": {
+            "type": "string"
+          },
+          "consumerbtstore": {
+            "type": "string"
+          },
+          "consumerbtzip": {
+            "type": "string"
+          },
+          "consumercity": {
+            "type": "string"
+          },
+          "consumercountry": {
+            "type": "string"
+          },
+          "consumername": {
+            "type": "string"
+          },
+          "consumerorderflag": {
+            "type": "string"
+          },
+          "consumerstate": {
+            "type": "string"
+          },
+          "consumerzip": {
+            "type": "string"
+          },
+          "context": {
+            "type": "string"
+          },
+          "couponcode": {
+            "type": "string"
+          },
+          "createdby": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "creationdate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "customerordernumber": {
+            "type": "string"
+          },
+          "customershippingmethod": {
+            "type": "string"
+          },
+          "customershipto": {
+            "$ref": "#/components/schemas/CustomerShipTo"
+          },
+          "customersignature": {
+            "type": "string"
+          },
+          "custordernumber": {
+            "type": "string"
+          },
+          "custponumber": {
+            "type": "string"
+          },
+          "defaultfulfillmentset": {
+            "type": "string",
+            "enum": [
+              "Y",
+              "N"
+            ]
+          },
+          "deliverto": {
+            "type": "string"
+          },
+          "delivertoorgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deliverycommissioncode": {
+            "type": "string"
+          },
+          "drnumber": {
+            "type": "string"
+          },
+          "flowstatuscode": {
+            "type": "string"
+          },
+          "fobpointcode": {
+            "type": "string"
+          },
+          "fobpointmeaning": {
+            "type": "string"
+          },
+          "freightcarriercode": {
+            "type": "string"
+          },
+          "freightcarriermeaning": {
+            "type": "string"
+          },
+          "freighttermscode": {
+            "type": "string"
+          },
+          "freighttermsmeaning": {
+            "type": "string"
+          },
+          "fulfillmentmethod": {
+            "type": "string"
+          },
+          "globalattributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attribute"
+            }
+          },
+          "headerid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "holdnamedff": {
+            "type": "string",
+            "enum": [
+              "ECL",
+              "ETA",
+              "OPH",
+              "PVH",
+              "MOH",
+              "FAKH",
+              "POH",
+              "ETR",
+              "APH",
+              "FOKH",
+              "BFH",
+              "HLB",
+              "HLC",
+              "OLH",
+              "NPC",
+              "CCF",
+              "CAH",
+              "AEH",
+              "BOH"
+            ]
+          },
+          "inboundplanningflag": {
+            "type": "string"
+          },
+          "invoiceto": {
+            "type": "string"
+          },
+          "invoicetoorgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "lastupdatedate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastupdatedby": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "legacycustdata": {
+            "type": "string"
+          },
+          "linesetname": {
+            "type": "string"
+          },
+          "marketingassistfee": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "naprogramnumber": {
+            "type": "string"
+          },
+          "openflag": {
+            "type": "string"
+          },
+          "ordercategorycode": {
+            "type": "string",
+            "enum": [
+              "ORDER",
+              "RETURN",
+              "MIXED"
+            ]
+          },
+          "ordereddate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ordernumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ordersourceid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ordersourcemeaning": {
+            "type": "string"
+          },
+          "ordertypecode": {
+            "type": "string",
+            "enum": [
+              "BILL_ONLY",
+              "BOOKING_ORDER",
+              "BOOK_DC_DIRECT_SHIP",
+              "CREDIT_ONLY",
+              "DC_DIRECT_SHIP",
+              "DEFECTIVE_RTV_SALES",
+              "DO_NOT_USE",
+              "FUEL_SURCHARGE",
+              "GENERIC_SALES",
+              "GOVT_WASH_BILL",
+              "GOVT_WASH_CREDIT",
+              "INTERNAL_SALES",
+              "NA_INDIRECT_BILL_ONLY",
+              "NA_INDIRECT_CREDIT_ONLY",
+              "PRICE_CORR_BILL_ONLY",
+              "PRICE_CORR_CREDIT_ONLY",
+              "RECEIPT_ONLY",
+              "RESTOCKING_FEE",
+              "REPLENISHMENT_SALES",
+              "RETURNS",
+              "INSTALLER_SALES",
+              "RTC",
+              "SHIP_ONLY",
+              "SHIP_TO_HOME",
+              "STH_MB_SALE",
+              "STH_VENDOR_DIRECT_SHIP",
+              "VENDOR_DIRECT_SHIP",
+              "WARRANTY_RMA_PICKUP",
+              "WATERFALL_BILL_ONLY",
+              "WATERFALL_CREDIT_ONLY",
+              "THREE_PL_SALES"
+            ]
+          },
+          "ordertypeid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ordertypemeaning": {
+            "type": "string"
+          },
+          "orgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "origsysdocumentref": {
+            "type": "string"
+          },
+          "outboundplanningflag": {
+            "type": "string"
+          },
+          "packinginstructions": {
+            "type": "string"
+          },
+          "paymenttermid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "paymenttermmeaning": {
+            "type": "string"
+          },
+          "paymenttypecode": {
+            "type": "string"
+          },
+          "paymenttypemeaning": {
+            "type": "string"
+          },
+          "podate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pricelistid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pricelistname": {
+            "type": "string"
+          },
+          "processeddate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "processedmessage": {
+            "type": "string"
+          },
+          "processflag": {
+            "type": "string"
+          },
+          "quickreturnflag": {
+            "type": "string"
+          },
+          "saleschannelcode": {
+            "type": "string"
+          },
+          "saleschannelmeaning": {
+            "type": "string"
+          },
+          "salesperson": {
+            "type": "string"
+          },
+          "salesrepid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "shipfrom": {
+            "type": "string"
+          },
+          "shipfromorgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "shipmentprioritycode": {
+            "type": "string",
+            "enum": [
+              "High",
+              "Standard"
+            ]
+          },
+          "shipmentprioritymeaning": {
+            "type": "string"
+          },
+          "shippinginstructions": {
+            "type": "string"
+          },
+          "shippingmethodcode": {
+            "type": "string"
+          },
+          "shippingmethodmeaning": {
+            "type": "string"
+          },
+          "shipto": {
+            "type": "string"
+          },
+          "shiptoorgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "soldfrom": {
+            "type": "string"
+          },
+          "soldfromorgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "soldto": {
+            "type": "string"
+          },
+          "soldtoorgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "tcnumber": {
+            "type": "string"
+          },
+          "tpattributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attribute"
+            }
+          },
+          "transactionalcurrcode": {
+            "type": "string"
+          }
+        }
+      },
+      "ISOLine": {
+        "type": "object",
+        "properties": {
+          "batchid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "cancelcomments": {
+            "type": "string"
+          },
+          "categoryid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdby": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "creationdate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "delivertolocationid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "destinationorganizationid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "destinationsubinventory": {
+            "type": "string"
+          },
+          "employeeid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "interfacesourcecode": {
+            "type": "string"
+          },
+          "inventoryitemid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isofuiid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isoheaderid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isolineid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isoordernumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isoreqid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "itemnumber": {
+            "type": "string"
+          },
+          "languagecode": {
+            "type": "string"
+          },
+          "lastupdatedate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastupdatedby": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "linesetheader": {
+            "type": "string"
+          },
+          "needbydate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ordercomments": {
+            "type": "string"
+          },
+          "orgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pickupDcOrgId": {
+            "type": "string"
+          },
+          "processbatchid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "processedmessage": {
+            "type": "string"
+          },
+          "processflag": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "requisitionheaderid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "requisitionlineid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "requisitiontype": {
+            "type": "string"
+          },
+          "routeid": {
+            "type": "string"
+          },
+          "routesequence": {
+            "type": "string"
+          },
+          "salesorder": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "salesorderlineno": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "salesordershipmentno": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "shipmentprioritycode": {
+            "type": "string"
+          },
+          "shippingDcOrgId": {
+            "type": "string"
+          },
+          "shippinginstructions": {
+            "type": "string"
+          },
+          "shippingmethodcode": {
+            "type": "string"
+          },
+          "shipsetline": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sourceorganizationid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sourcesubinventory": {
+            "type": "string"
+          },
+          "transactionid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "uomcode": {
+            "type": "string"
+          },
+          "vendorid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "vendorlocation": {
+            "type": "string"
+          },
+          "vendorname": {
+            "type": "string"
+          },
+          "vendorsiteid": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "MetaData": {
+        "type": "object",
+        "properties": {
+          "locationNumber": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductFill"
+            }
+          }
+        }
+      },
+      "OrderEnrichmentResponse": {
+        "type": "object",
+        "properties": {
+          "metaData": {
+            "$ref": "#/components/schemas/MetaData"
+          },
+          "header": {
+            "$ref": "#/components/schemas/Header"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderLine"
+            }
+          }
+        }
+      },
+      "OrderLine": {
+        "type": "object",
+        "properties": {
+          "actioncode": {
+            "type": "string",
+            "enum": [
+              "BOOKED",
+              "ENTERED",
+              "UPDATE",
+              "CANCEL"
+            ]
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attribute"
+            }
+          },
+          "bandagworkordernumber": {
+            "type": "string"
+          },
+          "bookedflag": {
+            "type": "string"
+          },
+          "calculatepriceflag": {
+            "type": "string"
+          },
+          "cancelcomments": {
+            "type": "string"
+          },
+          "cancelledflag": {
+            "type": "string"
+          },
+          "cancelledquantity": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "carrierquotedfreightcost": {
+            "type": "number",
+            "format": "float"
+          },
+          "changereason": {
+            "type": "string"
+          },
+          "claimnumber": {
+            "type": "string"
+          },
+          "consumerfreighthandling": {
+            "type": "string"
+          },
+          "consumersalesprice": {
+            "type": "string"
+          },
+          "consumersalestax": {
+            "type": "string"
+          },
+          "context": {
+            "type": "string"
+          },
+          "contractnumber": {
+            "type": "string"
+          },
+          "couponcodediscount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdby": {
+            "type": "string"
+          },
+          "creationdate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "customerReservedQty": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "customeritemnetprice": {
+            "type": "number",
+            "format": "float"
+          },
+          "customerlinenumber": {
+            "type": "string"
+          },
+          "customerorderlinenumber": {
+            "type": "string"
+          },
+          "customerordernumber": {
+            "type": "string"
+          },
+          "customerpartnumber": {
+            "type": "string"
+          },
+          "custpolinenumber": {
+            "type": "string"
+          },
+          "custponumber": {
+            "type": "string"
+          },
+          "dealerSoldTo": {
+            "type": "string"
+          },
+          "deliverto": {
+            "type": "string"
+          },
+          "delivertoorgid": {
+            "type": "string"
+          },
+          "deliveryleadtime": {
+            "type": "string"
+          },
+          "dotnumber": {
+            "type": "string"
+          },
+          "edigtin": {
+            "type": "string"
+          },
+          "expectedresvqty": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "fetexemption": {
+            "type": "string"
+          },
+          "flowstatuscode": {
+            "type": "string"
+          },
+          "fobpointcode": {
+            "type": "string"
+          },
+          "fobpointmeaning": {
+            "type": "string"
+          },
+          "freightamount": {
+            "type": "number",
+            "format": "float"
+          },
+          "freightcarriercode": {
+            "type": "string"
+          },
+          "freightcarriermeaning": {
+            "type": "string"
+          },
+          "freighttermscode": {
+            "type": "string"
+          },
+          "freighttermsmeaning": {
+            "type": "string"
+          },
+          "fulfillmentmethod": {
+            "type": "string"
+          },
+          "headerid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "holdflag": {
+            "type": "string"
+          },
+          "holdnamedff": {
+            "type": "string",
+            "enum": [
+              "ECL",
+              "ETA",
+              "OPH",
+              "PVH",
+              "MOH",
+              "FAKH",
+              "POH",
+              "ETR",
+              "APH",
+              "FOKH",
+              "BFH",
+              "HLB",
+              "HLC",
+              "OLH",
+              "NPC",
+              "CCF",
+              "CAH",
+              "AEH",
+              "BOH"
+            ]
+          },
+          "inventoryitemid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "invoiceto": {
+            "type": "string"
+          },
+          "invoicetoorgid": {
+            "type": "string"
+          },
+          "isoline": {
+            "$ref": "#/components/schemas/ISOLine"
+          },
+          "isoordernumber": {
+            "type": "string"
+          },
+          "itemnumber": {
+            "type": "string"
+          },
+          "lastupdatedate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastupdatedby": {
+            "type": "string"
+          },
+          "latestacceptabledate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "linecategorycode": {
+            "type": "string"
+          },
+          "lineid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "linenumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "linetypecode": {
+            "type": "string",
+            "enum": [
+              "THREE_PL_SALES_LINE",
+              "BILL_ONLY_LINE",
+              "BOOKING_ORDER_LINE",
+              "BOOK_DC_DIRECT_SHIP_LINE",
+              "CREDIT_ONLY_LINE",
+              "DC_DIRECT_SHIP_LINE",
+              "DEFECTIVE_RTV_SALES_LINE",
+              "DO_NOT_USE",
+              "FUEL_SURCHARGE_LINE",
+              "GENERIC_SALES_LINE",
+              "GOVT_WASH_BILL_LINE",
+              "GOVT_WASH_CREDIT_LINE",
+              "INTERNAL_SALES_LINE",
+              "MKT_FEE_BILL_LINE",
+              "NA_INDIRECT_BILL_LINE",
+              "NA_INDIRECT_CREDIT_LINE",
+              "PRICE_CORR_BILL_ONLY_LINE",
+              "PRICE_CORR_CREDIT_ONLY_LINE",
+              "RECEIPT_ONLY_LINE",
+              "RESTOCKING_FEE_LINE",
+              "REPLENISHMENT_SALES_LINE",
+              "RETURNS_LINE",
+              "INSTALLER_SALES_LINE",
+              "RTC_LINE",
+              "SHIP_ONLY_LINE",
+              "SHIP_TO_HOME_LINE",
+              "STH_MB_SALE_LINE",
+              "STH_VENDOR_DIRECT_SHIP_LINE",
+              "VENDOR_DIRECT_SHIP_LINE",
+              "WARRANTY_RMA_PICKUP_LINE",
+              "WATERFALL_BILL_ONLY_LINE",
+              "WATERFALL_CREDIT_ONLY_LINE"
+            ]
+          },
+          "linetypeid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "linetypemeaning": {
+            "type": "string"
+          },
+          "mileage": {
+            "type": "string"
+          },
+          "naprogramnumber": {
+            "type": "string"
+          },
+          "openflag": {
+            "type": "string"
+          },
+          "orderedquantity": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ordernumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "orderquantityuom": {
+            "type": "string"
+          },
+          "orderunitofmeasure": {
+            "type": "string"
+          },
+          "orgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "origsysdocumentref": {
+            "type": "string"
+          },
+          "origsyslineref": {
+            "type": "string"
+          },
+          "packinginstructions": {
+            "type": "string"
+          },
+          "paymenttermid": {
+            "type": "string"
+          },
+          "paymenttermmeaning": {
+            "type": "string"
+          },
+          "paymenttypecode": {
+            "type": "string"
+          },
+          "paymenttypemeaning": {
+            "type": "string"
+          },
+          "pickupDcOrgId": {
+            "type": "string"
+          },
+          "poxshipflag": {
+            "type": "string"
+          },
+          "poxshipnotes": {
+            "type": "string"
+          },
+          "pricelistid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pricelistname": {
+            "type": "string"
+          },
+          "pricingdate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "prioritypickup": {
+            "type": "string"
+          },
+          "processeddate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "processedmessage": {
+            "type": "string"
+          },
+          "processflag": {
+            "type": "string"
+          },
+          "producttype": {
+            "type": "string",
+            "enum": [
+              "WHEEL_ACCESSORY",
+              "TOOL",
+              "SUPPLY",
+              "TIRE",
+              "TUBE",
+              "WHEEL",
+              "NOT_AVAILABLE"
+            ]
+          },
+          "promiseddate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "referenceheaderid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "referencelineid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "referencetype": {
+            "type": "string"
+          },
+          "restockingfee": {
+            "type": "string"
+          },
+          "returnattribute1": {
+            "type": "string"
+          },
+          "returnattribute2": {
+            "type": "string"
+          },
+          "returncontext": {
+            "type": "string"
+          },
+          "returnreasoncode": {
+            "type": "string"
+          },
+          "route": {
+            "type": "string"
+          },
+          "routesequence": {
+            "type": "string"
+          },
+          "salesperson": {
+            "type": "string"
+          },
+          "salesrepid": {
+            "type": "string"
+          },
+          "schedulearrivaldate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "scheduledshipdate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "shipfrom": {
+            "type": "string"
+          },
+          "shipfromorgid": {
+            "type": "string"
+          },
+          "shipmentprioritycode": {
+            "type": "string",
+            "enum": [
+              "High",
+              "Standard"
+            ]
+          },
+          "shipmentprioritymeaning": {
+            "type": "string"
+          },
+          "shippedquantity": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "shippingDcOrgId": {
+            "type": "string"
+          },
+          "shippinginstructions": {
+            "type": "string"
+          },
+          "shippingmethodcode": {
+            "type": "string"
+          },
+          "shippingmethodmeaning": {
+            "type": "string"
+          },
+          "shipsetid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "shipto": {
+            "type": "string"
+          },
+          "shiptoorgid": {
+            "type": "string"
+          },
+          "soldfrom": {
+            "type": "string"
+          },
+          "soldfromorgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "soldto": {
+            "type": "string"
+          },
+          "soldtoorgid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "subinventory": {
+            "type": "string"
+          },
+          "tppcostperunit": {
+            "type": "number",
+            "format": "float"
+          },
+          "treaddepth": {
+            "type": "string"
+          },
+          "unitlistprice": {
+            "type": "number",
+            "format": "float"
+          },
+          "unitsellingprice": {
+            "type": "number",
+            "format": "float"
+          },
+          "updateflag": {
+            "type": "string"
+          },
+          "useritemdescription": {
+            "type": "string"
+          },
+          "vendorlocation": {
+            "type": "string"
+          },
+          "vendorname": {
+            "type": "string"
+          }
+        }
+      },
+      "ProductFill": {
+        "type": "object",
+        "properties": {
+          "productNumber": {
+            "type": "string"
+          },
+          "customerPOLineId": {
+            "type": "string"
+          },
+          "lineId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "filledQty": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "killedQty": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "vendorName": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorDetails": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
