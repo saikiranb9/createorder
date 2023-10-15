@@ -1,0 +1,24 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: createorder-configmap
+data:
+  #Environment-agnostic configs
+  apigateway.url: http://apigateway:9093
+  http.aggregator.url: http://apigateway:9093/http-aggregator/process
+  kafka.security.protocol: SSL
+  #Develop
+  dev.host.name: develop-edi.gcp.atd-us.com
+  dev.msa.base.path.url: https://r-qa-msa.gcp.atd-us.com
+  dev.kafka.bootstrap.server.url: kafka-dev-2.gcp.atd-us.icd:31090
+  dev.edi.order.ack.kafka.topic: "DORDERACK"
+  #QA
+  qa.host.name: r-qa-edi.gcp.atd-us.com
+  qa.msa.base.path.url: https://p-xat-msa.gcp.atd-us.com
+  qa.kafka.bootstrap.server.url: kafka-xat-2.gcp.atd-us.icd:31090
+  qa.edi.order.ack.kafka.topic: "ORDERACK"
+  #Production
+  prod.host.name: prod-edi.gcp.atd-us.com
+  prod.msa.base.path.url: https://prod-msa.gcp.atd-us.com
+  prod.kafka.bootstrap.server.url: kafka-prod-msa-int-2.gcp.atd-us.icd:31090
+  prod.edi.order.ack.kafka.topic: "ORDERACK"
